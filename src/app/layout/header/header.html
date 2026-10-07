@@ -1,0 +1,35 @@
+<header class="text-center my-4">
+  <h2>
+    <a routerLink="/" class="text-reset text-decoration-none">
+      Hotel Reservation Portal
+    </a>
+  </h2>
+  <br />
+  <nav class="d-grid gap-2 d-md-block">
+    <a
+      class="btn btn-primary mx-2"
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+    >
+      Home
+    </a>
+    <a
+      class="btn btn-primary mx-2"
+      routerLink="/new"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Create a new reservation
+    </a>
+    <a
+      class="btn btn-primary mx-2"
+      routerLink="/list"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      View all reservations
+    </a>
+  </nav>
+</header>

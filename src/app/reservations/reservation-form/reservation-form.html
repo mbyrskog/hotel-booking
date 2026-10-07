@@ -1,0 +1,107 @@
+<h3 class="mt-5 mb-3">
+  {{ isEditMode() ? "Edit reservation" : "Create a new reservation" }}
+</h3>
+
+<form [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+  <div class="row mb-3">
+    <div class="col">
+      <label for="checkInDate" class="form-label">Check-In Date:</label>
+      <input
+        id="checkInDate"
+        name="checkInDate"
+        class="form-control"
+        type="date"
+        formControlName="checkInDate"
+      />
+      @if ( reservationForm.get("checkInDate")?.invalid &&
+      reservationForm.get("checkInDate")?.touched ) {
+      <small class="text-danger"> Check-In Date is required. </small>
+      }
+    </div>
+
+    <div class="col">
+      <label for="checkOutDate" class="form-label">Check-Out Date:</label>
+      <input
+        id="checkOutDate"
+        name="checkOutDate"
+        class="form-control"
+        type="date"
+        formControlName="checkOutDate"
+      />
+      @if ( reservationForm.get("checkOutDate")?.invalid &&
+      reservationForm.get("checkOutDate")?.touched ) {
+      <small class="text-danger"> Check-Out Date is required. </small>
+      } @if ( reservationForm.hasError("checkOutBeforeCheckIn") &&
+      reservationForm.get("checkOutDate")?.touched ) {
+      <small class="text-danger">
+        Check-Out Date must be after Check-In Date.
+      </small>
+      }
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <label for="guestName" class="form-label">Guest Name:</label>
+      <input
+        id="guestName"
+        name="guestName"
+        class="form-control"
+        type="text"
+        formControlName="guestName"
+      />
+      @if ( reservationForm.get("guestName")?.invalid &&
+      reservationForm.get("guestName")?.touched ) {
+      <small class="text-danger"> Guest Name is required. </small>
+      }
+    </div>
+
+    <div class="col">
+      <label for="guestEmail" class="form-label">Guest Email:</label>
+      <input
+        id="guestEmail"
+        name="guestEmail"
+        class="form-control"
+        type="email"
+        formControlName="guestEmail"
+      />
+      @if ( reservationForm.get("guestEmail")?.invalid &&
+      reservationForm.get("guestEmail")?.touched ) { @if
+      (reservationForm.get("guestEmail")?.hasError("required")) {
+      <small class="text-danger"> Guest Email is required. </small>
+      } @else {
+      <small class="text-danger"> Guest Email is not valid. </small>
+      } }
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-3">
+      <label for="roomNumber" class="form-label">Room Number:</label>
+      <input
+        id="roomNumber"
+        name="roomNumber"
+        class="form-control"
+        type="number"
+        min="1"
+        max="100"
+        formControlName="roomNumber"
+      />
+      @if ( reservationForm.get("roomNumber")?.invalid &&
+      reservationForm.get("roomNumber")?.touched ) { @if
+      (reservationForm.get("roomNumber")?.hasError("required")) {
+      <small class="text-danger"> Room Number is required. </small>
+      } @else {
+      <small class="text-danger"> Room Number must be 1-100. </small>
+      } }
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary"
+    type="submit"
+    [disabled]="reservationForm.invalid"
+  >
+    Submit
+  </button>
+</form>

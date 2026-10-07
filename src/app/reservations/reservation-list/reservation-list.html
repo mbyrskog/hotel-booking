@@ -1,0 +1,61 @@
+<h3 class="mt-5 mb-3">Reservation List</h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Guest</th>
+      <th>Email</th>
+      <th>Room No.</th>
+      <th>Check-In</th>
+      <th>Check-Out</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (reservation of reservations(); track reservation.id) {
+    <tr>
+      <td>{{ reservation.guestName }}</td>
+      <td>{{ reservation.guestEmail }}</td>
+      <td>{{ reservation.roomNumber }}</td>
+      <td>{{ reservation.checkInDate | date }}</td>
+      <td>{{ reservation.checkOutDate | date }}</td>
+      <td>
+        <button
+          class="btn btn-sm btn-danger mx-1"
+          (click)="pendingDelete.set(reservation); confirmDialog.showModal()"
+        >
+          Delete
+        </button>
+        <button
+          class="btn btn-sm btn-secondary mx-1"
+          [routerLink]="['/edit', reservation.id]"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+@if (!reservations().length) {
+<p>No reservation available.</p>
+}
+
+<dialog
+  #confirmDialog
+  class="border-0 rounded-3 shadow p-4"
+  aria-labelledby="confirm-delete-title"
+>
+  @let reservation = pendingDelete();
+  <h5 id="confirm-delete-title" class="mb-3">Delete reservation?</h5>
+  <p class="mb-4">
+    The reservation for <strong>{{ reservation?.guestName }}</strong> in room {{
+    reservation?.roomNumber }}, {{ reservation?.checkInDate | date }} – {{
+    reservation?.checkOutDate | date }}, will be permanently deleted.
+  </p>
+  <form method="dialog" class="d-flex justify-content-end gap-2">
+    <button class="btn btn-secondary" autofocus>Cancel</button>
+    <button class="btn btn-danger" (click)="deleteReservation()">Delete</button>
+  </form>
+</dialog>

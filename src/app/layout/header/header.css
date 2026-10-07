@@ -1,0 +1,4 @@
+.btn-primary.active {
+  --bs-btn-active-bg: #084298;
+  --bs-btn-active-border-color: #084298;
+}
